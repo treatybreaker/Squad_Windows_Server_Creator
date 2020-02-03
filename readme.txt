@@ -1,4 +1,4 @@
-This script requires administrative rights to do its job correctly as it opens ports in a firewall.
+This script requires administrative rights to do its job correctly as it allows the Squad Server EXE through the firewall.
 This script assumes that powershell 1.0 is installed in the following fashion (it usually is installed so it should be fine for most users): %SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell.exe
 That effectively translates to: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
 
