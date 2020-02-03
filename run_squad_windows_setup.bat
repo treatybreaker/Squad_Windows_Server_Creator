@@ -77,6 +77,7 @@ IF %open_ports%==T (
 
 set query_port=27165
 set game_port=7787
+set rcon_port=21114
 
 echo "Current installation directory: %cd%"
 echo "By default the script uses the location of where it's run to install server files and SteamCMD!"
@@ -107,14 +108,14 @@ echo Downloading SteamCMD.exe
 @echo "start SquadGameServer.exe -log -fullcrashdump Port=%game_port% QueryPort=%query_port% FIXEDMAXPLAYERS=80 RANDOM=NONE" > %path%\Server\start_squad_server.bat
 
 (
-@echo Make sure to edit your RCON port in Rcon.cfg to your custom port: %rcon_port% if you used a custom port
-@echo Check server.cfg to change the name of the server and other configuration options.
-@echo Check MOTD.cfg to set server rules etc. on the team selection menu.
-@echo Check MapRotation.cfg to set the map rotation, map names can be found at https://squad.gamepedia.com/Server_Configuration#Map_Rotation_in_MapRotation.cfg
-@echo "Check Admins.cfg to set admins. This config file requires Steam64 IDs which can be grabbed from: https://steamid.uk/ by pasting in a steamcommunity link.
-@echo Check ServerMessages.cfg to set messages to occasionally broadcast to all players with text. This is typically used to broadcast server rules or upcoming events.
-@echo Bans.cfg can be used to create bans (and typically will have a bajillion automatic TK kicks on licensed servers). It's recommended to only ban from in-game or using battlmetrics: http://battlemetrics.com/
-@echo Thanks for using the spaghetti script that went through an initial iteration of Python3 for no good reason.
+@echo "Make sure to edit your RCON port in Rcon.cfg to your custom port: %rcon_port% if you used a custom port"
+@echo "Check server.cfg to change the name of the server and other configuration options."
+@echo "Check MOTD.cfg to set server rules etc. on the team selection menu."
+@echo "Check MapRotation.cfg to set the map rotation, map names can be found at https://squad.gamepedia.com/Server_Configuration#Map_Rotation_in_MapRotation.cfg"
+@echo "Check Admins.cfg to set admins. This config file requires Steam64 IDs which can be grabbed from: https://steamid.uk/ by pasting in a steamcommunity link."
+@echo "Check ServerMessages.cfg to set messages to occasionally broadcast to all players with text. This is typically used to broadcast server rules or upcoming events."
+@echo "Bans.cfg can be used to create bans (and typically will have a bajillion automatic TK kicks on licensed servers). It's recommended to only ban from in-game or using battlmetrics: http://battlemetrics.com/"
+@echo "Thanks for using the spaghetti script that went through an initial iteration of Python3 for no good reason."
 ) > %path%\Server\README_IMPORTANT.txt
 
 
