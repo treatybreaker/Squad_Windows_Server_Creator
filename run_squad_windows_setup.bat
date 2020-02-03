@@ -29,7 +29,6 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 :--------------------------------------  
 
-
 set /P open_ports="Would you like to open ports needed for your game server via this script? (Y/N): "
 IF %open_ports%==Y set open_ports=T
 IF %open_ports%==y set open_ports=T
@@ -76,10 +75,8 @@ IF %open_ports%==T (
 		netsh advfirewall firewall add rule name="Squad RCON Port TCP" dir=in action=allow protocol=TCP localport=%rcon_port%
 )
 
-
 set query_port=27165
 set game_port=7787
-
 
 echo "Current installation directory: %cd%"
 echo "By default the script uses the location of where it's run to install server files and SteamCMD!"
@@ -92,7 +89,6 @@ IF %use_custom_install_path%==T (
 )  else (
 	set path=%cd%
 )
-
 IF %use_custom_install_path%==T (
 	echo "Creating Directories at %path%"
 	md %path%\Server %path%\SteamCMD
@@ -103,30 +99,26 @@ IF %use_custom_install_path%==T (
 	echo Done Making Directories at %path%
 )
 
-
 echo Downloading SteamCMD.exe
 %SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell.exe -command "Start-BitsTransfer -Source "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip""
 %SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell.exe -command "Expand-Archive steamcmd.zip %path%\SteamCMD"
 
-
 @echo "%path%\SteamCMD\steamcmd.exe" +login anonymous +force_install_dir "%path%\Server" +app_update 403240 validate > %path%\Server\update_squad_server.bat
-@echo "start SquadGameServer.exe -log -fullcrashdump Port=%game_port% QueryPort=%query_port% FIXEDMAXPLAYERS=80 RANDOM=NONE > %path%\Server\start_squad_server.bat
-
+@echo "start SquadGameServer.exe -log -fullcrashdump Port=%game_port% QueryPort=%query_port% FIXEDMAXPLAYERS=80 RANDOM=NONE" > %path%\Server\start_squad_server.bat
 
 (
-@echo "Make sure to edit your RCON port in Rcon.cfg to your custom port: %rcon_port% if you used a custom port"
-@echo "Check server.cfg to change the name of the server and other configuration options."
-@echo "Check MOTD.cfg to set server rules etc. on the team selection menu."
-@echo "Check MapRotation.cfg to set the map rotation, map names can be found at https://squad.gamepedia.com/Server_Configuration#Map_Rotation_in_MapRotation.cfg"
-@echo "Check Admins.cfg to set admins. This config file requires Steam64 IDs which can be grabbed from: https://steamid.uk/ by pasting in a steamcommunity link."
-@echo "Check ServerMessages.cfg to set messages to occasionally broadcast to all players with text. This is typically used to broadcast server rules or upcoming events."
-@echo "Bans.cfg can be used to create bans (and typically will have a bajillion automatic TK kicks on licensed servers). It's recommended to only ban from in-game or using battlmetrics: http://battlemetrics.com/"
-@echo "Thanks for using the script from hell that went through an initial iteration of Python3 for no good reason."
-) > %cd%\Server\README_IMPORTANT.txt
+@echo Make sure to edit your RCON port in Rcon.cfg to your custom port: %rcon_port% if you used a custom port
+@echo Check server.cfg to change the name of the server and other configuration options.
+@echo Check MOTD.cfg to set server rules etc. on the team selection menu.
+@echo Check MapRotation.cfg to set the map rotation, map names can be found at https://squad.gamepedia.com/Server_Configuration#Map_Rotation_in_MapRotation.cfg
+@echo "Check Admins.cfg to set admins. This config file requires Steam64 IDs which can be grabbed from: https://steamid.uk/ by pasting in a steamcommunity link.
+@echo Check ServerMessages.cfg to set messages to occasionally broadcast to all players with text. This is typically used to broadcast server rules or upcoming events.
+@echo Bans.cfg can be used to create bans (and typically will have a bajillion automatic TK kicks on licensed servers). It's recommended to only ban from in-game or using battlmetrics: http://battlemetrics.com/
+@echo Thanks for using the spaghetti script that went through an initial iteration of Python3 for no good reason.
+) > %path%\Server\README_IMPORTANT.txt
 
 
 SET STEAMCMD="%path%\SteamCMD\steamcmd.exe"
 %STEAMCMD% +login anonymous +force_install_dir "%path%\Server" +app_update 403240 validate
-
 
 PAUSE
