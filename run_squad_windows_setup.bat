@@ -29,10 +29,11 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 :--------------------------------------  
 
-set /P open_ports="Would you like to open ports needed for your game server via this script? (Y/N) "
+set /P open_ports="Would you like to open ports needed for your game server via this script? (Y/N): "
 IF %open_ports%==Y set open_ports=T
 IF %open_ports%==y set open_ports=T
-IF %open_ports%==T set /P use_custom_ports="Would you like to use custom ports? (Y/N) "
+set use_custom_ports=F
+IF %open_ports%==T set /P use_custom_ports="Would you like to use custom ports? (Y/N): "
 IF %use_custom_ports%==y set use_custom_ports=T
 IF %use_custom_ports%==Y set use_custom_ports=T
 
@@ -74,16 +75,36 @@ IF %open_ports%==T (
 		netsh advfirewall firewall add rule name="Squad RCON Port TCP" dir=in action=allow protocol=TCP localport=%rcon_port%
 )
 
-echo Creating Directories
-md Server SteamCMD
-echo Done Making Directories
+set query_port=27165
+set game_port=7787
+
+echo "Current installation directory: %cd%"
+echo "By default the script uses the location of where it's run to install server files and SteamCMD!"
+set /P use_custom_install_path="Would you like to use a different installation location for your files? (Y/N): "
+IF %use_custom_install_path%==Y set use_custom_install_path=T
+IF %use_custom_install_path%==y set use_custom_install_path=T
+
+IF %use_custom_install_path%==T (
+	set /P path="Custom installation location: "
+)  else (
+	set path=%cd%
+)
+IF %use_custom_install_path%==T (
+	echo "Creating Directories at %path%"
+	md %path%\Server %path%\SteamCMD
+	echo Finished Making Directories at %path%
+) else (
+	echo Creating Directories at %path%
+	md Server SteamCMD
+	echo Done Making Directories at %path%
+)
 
 echo Downloading SteamCMD.exe
-powershell -command "Start-BitsTransfer -Source "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip""
-powershell -command "Expand-Archive steamcmd.zip .\SteamCMD"
+%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell.exe -command "Start-BitsTransfer -Source "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip""
+%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell.exe -command "Expand-Archive steamcmd.zip %path%\SteamCMD"
 
-@echo "..\SteamCMD\steamcmd.exe" +login anonymous +force_install_dir "..\Server" +app_update 403240 validate > %cd%\Server\update_squad_server.bat
-@echo "start SquadGameServer.exe -log -fullcrashdump Port=%game_port% QueryPort=%query_port% FIXEDMAXPLAYERS=80 RANDOM=NONE > %cd%\Server\start_squad_server.bat
+@echo "%path%\SteamCMD\steamcmd.exe" +login anonymous +force_install_dir "%path%\Server" +app_update 403240 validate > %path%\Server\update_squad_server.bat
+@echo "start SquadGameServer.exe -log -fullcrashdump Port=%game_port% QueryPort=%query_port% FIXEDMAXPLAYERS=80 RANDOM=NONE > %path%\Server\start_squad_server.bat
 
 (
 @echo "Make sure to edit your RCON port in Rcon.cfg to your custom port: %rcon_port% if you used a custom port"
@@ -97,7 +118,7 @@ powershell -command "Expand-Archive steamcmd.zip .\SteamCMD"
 ) > %cd%\Server\README_IMPORTANT.txt
 
 
-SET STEAMCMD="%cd%\SteamCMD\steamcmd.exe"
-%STEAMCMD% +login anonymous +force_install_dir "..\Server" +app_update 403240 validate
+SET STEAMCMD="%path%\SteamCMD\steamcmd.exe"
+%STEAMCMD% +login anonymous +force_install_dir "%path%\Server" +app_update 403240 validate
 
 PAUSE
