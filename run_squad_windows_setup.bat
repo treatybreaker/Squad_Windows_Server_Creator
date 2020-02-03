@@ -29,7 +29,6 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 :--------------------------------------  
 
-
 echo "Current installation directory: %cd%"
 echo "By default the script uses the location of where it's run to install server files and SteamCMD!"
 set /P use_custom_install_path="Would you like to use a different installation location for your files? (Y/N): "
@@ -51,10 +50,8 @@ IF %use_custom_install_path%==T (
 	echo Done Making Directories at %path%
 )
 
-
 @echo "%path%\SteamCMD\steamcmd.exe" +login anonymous +force_install_dir "%path%\Server" +app_update 403240 validate > %path%\Server\update_squad_server.bat
 @echo "start SquadGameServer.exe -log -fullcrashdump Port=%game_port% QueryPort=%query_port% FIXEDMAXPLAYERS=80 RANDOM=NONE" > %path%\Server\start_squad_server.bat
-
 
 echo "Allowing the Squad Server EXE through the firewall"
 %SYSTEMROOT%\System32\netsh.exe advfirewall firewall add rule name="Squad Server EXE" dir=in action=allow program="%path%\Server\SquadGameServer.exe"
@@ -74,7 +71,6 @@ echo "Allowing the Squad Server EXE through the firewall"
 echo Downloading SteamCMD.exe
 %SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell.exe -command "Start-BitsTransfer -Source "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip""
 %SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell.exe -command "Expand-Archive steamcmd.zip %path%\SteamCMD"
-
 
 SET STEAMCMD="%path%\SteamCMD\steamcmd.exe"
 %STEAMCMD% +login anonymous +force_install_dir "%path%\Server" +app_update 403240 validate
