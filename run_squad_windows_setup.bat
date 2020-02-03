@@ -75,4 +75,5 @@ echo Downloading SteamCMD.exe
 SET STEAMCMD="%path%\SteamCMD\steamcmd.exe"
 %STEAMCMD% +login anonymous +force_install_dir "%path%\Server" +app_update 403240 validate
 
+echo Script is done
 PAUSE
