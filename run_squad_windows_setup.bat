@@ -54,7 +54,7 @@ IF %use_custom_install_path%==T (
 )
 
 @echo "%path%\SteamCMD\steamcmd.exe" +login anonymous +force_install_dir "%path%\Server" +app_update 403240 validate > %path%\Server\update_squad_server.bat
-@echo "start SquadGameServer.exe -log -fullcrashdump Port=%game_port% QueryPort=%query_port% FIXEDMAXPLAYERS=80 RANDOM=NONE" > %path%\Server\start_squad_server.bat
+@echo start SquadGameServer.exe -log -fullcrashdump Port=%game_port% QueryPort=%query_port% FIXEDMAXPLAYERS=80 RANDOM=NONE > %path%\Server\start_squad_server.bat
 IF %create_firewall_rules%==T (
 	echo "Allowing the Squad Server EXE through the firewall"
 	%SYSTEMROOT%\System32\netsh.exe advfirewall firewall add rule name="Squad Server EXE" dir=in action=allow program="%path%\Server\SquadGameServer.exe"
@@ -64,14 +64,14 @@ IF %create_firewall_rules%==T (
 )
 
 (
-@echo "Make sure to edit your RCON port in Rcon.cfg to your custom port: %rcon_port% if you used a custom port"
-@echo "Check server.cfg to change the name of the server and other configuration options."
-@echo "Check MOTD.cfg to set server rules etc. on the team selection menu."
-@echo "Check MapRotation.cfg to set the map rotation, map names can be found at https://squad.gamepedia.com/Server_Configuration#Map_Rotation_in_MapRotation.cfg"
-@echo "Check Admins.cfg to set admins. This config file requires Steam64 IDs which can be grabbed from: https://steamid.uk/ by pasting in a steamcommunity link."
-@echo "Check ServerMessages.cfg to set messages to occasionally broadcast to all players with text. This is typically used to broadcast server rules or upcoming events."
-@echo "Bans.cfg can be used to create bans (and typically will have a bajillion automatic TK kicks on licensed servers). It's recommended to only ban from in-game or using battlmetrics: http://battlemetrics.com/"
-@echo "Thanks for using the spaghetti script that went through an initial iteration of Python3 for no good reason."
+@echo Make sure to edit your RCON port in Rcon.cfg to your custom port: %rcon_port% if you used a custom port
+@echo Check server.cfg to change the name of the server and other configuration options.
+@echo Check MOTD.cfg to set server rules etc. on the team selection menu.
+@echo Check MapRotation.cfg to set the map rotation, map names can be found at https://squad.gamepedia.com/Server_Configuration#Map_Rotation_in_MapRotation.cfg
+@echo Check Admins.cfg to set admins. This config file requires Steam64 IDs which can be grabbed from: https://steamid.uk/ by pasting in a steamcommunity link.
+@echo Check ServerMessages.cfg to set messages to occasionally broadcast to all players with text. This is typically used to broadcast server rules or upcoming events.
+@echo Bans.cfg can be used to create bans (and typically will have a bajillion automatic TK kicks on licensed servers). It's recommended to only ban from in-game or using battlmetrics: http://battlemetrics.com/
+@echo Thanks for using the spaghetti script
 ) > %path%\Server\README_IMPORTANT.txt
 
 echo Downloading SteamCMD.exe
@@ -79,7 +79,8 @@ echo Downloading SteamCMD.exe
 %SYSTEMROOT%\System32\WindowsPowerShell\v1.0\powershell.exe -command "Expand-Archive steamcmd.zip %path%\SteamCMD"
 
 SET STEAMCMD="%path%\SteamCMD\steamcmd.exe"
-%STEAMCMD% +login anonymous +force_install_dir "%path%\Server" +app_update 403240 validate
+%STEAMCMD% +login anonymous +force_install_dir "%path%\Server" +app_update 403240 validate +quit
 
+echo Ensure you open the start_squad_server.bat and set your game port (usually 7787) and your query port (usually 27165)!
 echo Script is done
 PAUSE
