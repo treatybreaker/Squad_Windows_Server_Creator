@@ -32,7 +32,7 @@ if '%errorlevel%' NEQ '0' (
 echo "Current installation directory: %cd%"
 echo "By default the script uses the location of where it's run to install server files and SteamCMD!"
 set /P use_custom_install_path="Would you like to use a different installation location for your files? (Y/N): "
-set /P create_firewall_rules="Would you like the script to allow the SquadGame.exe through the firewall? (Y/N)"
+set /P create_firewall_rules="Would you like the script to allow the SquadGame.exe through the firewall? (Y/N): "
 IF %create_firewall_rules==Y set create_firewall_rules=T
 IF %create_firewall_rules==y set create_firewall_rules=T
 IF %use_custom_install_path%==Y set use_custom_install_path=T
