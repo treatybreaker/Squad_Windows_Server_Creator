@@ -32,6 +32,9 @@ if '%errorlevel%' NEQ '0' (
 echo "Current installation directory: %cd%"
 echo "By default the script uses the location of where it's run to install server files and SteamCMD!"
 set /P use_custom_install_path="Would you like to use a different installation location for your files? (Y/N): "
+set /P create_firewall_rules="Would you like the script to allow the SquadGame.exe through the firewall? (Y/N)"
+IF %create_firewall_rules==Y set create_firewall_rules=T
+IF %create_firewall_rules==y set create_firewall_rules=T
 IF %use_custom_install_path%==Y set use_custom_install_path=T
 IF %use_custom_install_path%==y set use_custom_install_path=T
 
@@ -52,10 +55,13 @@ IF %use_custom_install_path%==T (
 
 @echo "%path%\SteamCMD\steamcmd.exe" +login anonymous +force_install_dir "%path%\Server" +app_update 403240 validate > %path%\Server\update_squad_server.bat
 @echo "start SquadGameServer.exe -log -fullcrashdump Port=%game_port% QueryPort=%query_port% FIXEDMAXPLAYERS=80 RANDOM=NONE" > %path%\Server\start_squad_server.bat
-
-echo "Allowing the Squad Server EXE through the firewall"
-%SYSTEMROOT%\System32\netsh.exe advfirewall firewall add rule name="Squad Server EXE" dir=in action=allow program="%path%\Server\SquadGameServer.exe"
-%SYSTEMROOT%\System32\netsh.exe advfirewall firewall add rule name="Squad Server EXE" dir=out action=allow program="%path%\Server\SquadGameServer.exe"
+IF %create_firewall_rules%==T (
+	echo "Allowing the Squad Server EXE through the firewall"
+	%SYSTEMROOT%\System32\netsh.exe advfirewall firewall add rule name="Squad Server EXE" dir=in action=allow program="%path%\Server\SquadGameServer.exe"
+	%SYSTEMROOT%\System32\netsh.exe advfirewall firewall add rule name="Squad Server EXE" dir=out action=allow program="%path%\Server\SquadGameServer.exe"
+	%SYSTEMROOT%\System32\netsh.exe advfirewall firewall add rule name="Squad Server EXE" dir=out action=allow program="%path%\Server\SquadGame\Binaries\Win64\SquadGameServer.exe"
+	%SYSTEMROOT%\System32\netsh.exe advfirewall firewall add rule name="Squad Server EXE" dir=in action=allow program="%path%\Server\SquadGame\Binaries\Win64\SquadGameServer.exe"
+)
 
 (
 @echo "Make sure to edit your RCON port in Rcon.cfg to your custom port: %rcon_port% if you used a custom port"
