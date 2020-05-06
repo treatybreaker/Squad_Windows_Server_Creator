@@ -137,7 +137,7 @@ IF !use_custom_steamcmd! == F (
 @echo Check MapRotation.cfg to set the map rotation, map names can be found at https://squad.gamepedia.com/Server_Configuration#Map_Rotation_in_MapRotation.cfg
 @echo Check Admins.cfg to set admins. This config folder requires Steam64 IDs which can be grabbed from: https://steamid.uk/ by pasting in a steamcommunity link.
 @echo Check ServerMessages.cfg to set messages to occasionally broadcast to all players with text. This is typically used to broadcast server rules or upcoming events.
-@echo Bans.cfg can be used to create bans ^(and typically will have a bajillion automatic TK kicks on licensed servers^). Most servers use battlemetrics: http://battlemetrics.com/ to manage their servers.
+@echo Bans.cfg can be used to create bans ^(and typically will have a bajillion automatic TK kicks on licensed servers^). Most servers use battlemetrics: https://battlemetrics.com/ to manage their servers.
 @echo Thanks for using the spaghetti script
 ) > !server_path!\Server\README.txt
 
