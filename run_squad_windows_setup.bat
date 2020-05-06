@@ -38,7 +38,6 @@ IF !use_custom_steamcmd! == y set use_custom_steamcmd=T
 IF !use_custom_steamcmd! == N set use_custom_steamcmd=F
 IF !use_custom_steamcmd! == n set use_custom_steamcmd=F
 IF !use_custom_steamcmd! == T (
-	echo HERE
 	:custom_steam_location
 	set /P custom_steamcmd=What is the directory where your SteamCMD.exe is?
 	echo !custom_steamcmd!
