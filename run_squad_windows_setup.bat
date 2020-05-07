@@ -131,7 +131,7 @@ IF !use_custom_steamcmd! == F (
 )
 
 (
-@echo Make sure to edit your RCON port in Rcon.cfg to your custom port: !rcon_port! if you used a custom port
+@echo Make sure to edit your RCON port in Rcon.cfg.
 @echo Check server.cfg to change the name of the server and other configuration options.
 @echo Check MOTD.cfg to set server rules etc. on the team selection menu.
 @echo Check MapRotation.cfg to set the map rotation, map names can be found at https://squad.gamepedia.com/Server_Configuration#Map_Rotation_in_MapRotation.cfg
