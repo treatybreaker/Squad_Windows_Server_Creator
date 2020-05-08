@@ -105,7 +105,7 @@ IF NOT EXIST !folder_location! (
 
 
 echo Finished Making Directories at !server_path!
-echo "!custom_steamcmd!\SteamCMD\steamcmd.exe" +login anonymous +force_install_dir "!server_path!\!folder_name!" +app_update 403240 validate > !server_path!\!folder_name!\update_squad_server.bat
+echo "!custom_steamcmd!\steamcmd.exe" +login anonymous +force_install_dir "!server_path!\!folder_name!" +app_update 403240 validate > !server_path!\!folder_name!\update_squad_server.bat
 echo start SquadGameServer.exe -log -fullcrashdump Port= QueryPort= FIXEDMAXPLAYERS=80 RANDOM=NONE > !server_path!\!folder_name!\start_squad_server.bat
 
 :firewall_rules
